@@ -328,13 +328,12 @@ then create.  Return the initialized session."
     (error "No function available for running an inferior Hy"))
   (save-window-excursion
     (let* ((session (if session (intern session) :default))
-           (hy-buffer (org-babel-hy-session-buffer session))
-           (cmd org-babel-hy-command))
+           (hy-buffer (org-babel-hy-session-buffer session)))
       (unless hy-buffer
         (setq hy-buffer (org-babel-hy-with-earmuffs session)))
       (let ((hy-shell-buffer-name
              (org-babel-hy-without-earmuffs hy-buffer)))
-        (run-hy cmd))
+        (run-hy))
       (setq org-babel-hy-buffers
             (cons (cons session hy-buffer)
                   (assq-delete-all session org-babel-hy-buffers)))

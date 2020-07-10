@@ -142,18 +142,22 @@ last statement in BODY, as elisp."
   (let ((result
          (pcase result-type
            (`output (org-babel-eval
-                     (format "%s -c '%s'" org-babel-hy-command body) ""))
+                     (format "%s -c %s"
+                             org-babel-hy-command
+                             (combine-and-quote-strings (list body))) ""))
            (`value (let ((tmp-file (org-babel-temp-file "hy-")))
                      (org-babel-eval
                       (format
-                       "%s -c '%s'"
+                       "%s -c %s"
                        org-babel-hy-command
-                       (format
-                        (if (member "pp" result-params)
-                            org-babel-hy-pp-wrapper-method
-                          org-babel-hy-wrapper-method)
-                        body
-                        (org-babel-process-file-name tmp-file 'noquote))) "")
+                       (combine-and-quote-strings
+                        (list
+                         (format
+                          (if (member "pp" result-params)
+                              org-babel-hy-pp-wrapper-method
+                            org-babel-hy-wrapper-method)
+                          body
+                          (org-babel-process-file-name tmp-file 'noquote))))) "")
                      (org-babel-eval-read-file tmp-file))))))
     (org-babel-result-cond result-params
       result

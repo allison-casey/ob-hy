@@ -10,7 +10,7 @@ test:
 	              (setq org-confirm-babel-evaluate nil) \
 	              (org-babel-do-load-languages \
 	                'org-babel-load-languages '((emacs-lisp . t) \
-	                                            (sh . t) \
+	                                            (shell . t) \
 	                                            (org . t) \
 	                                            (hy . t))))" \
 	    -f ob-hy-test-runall

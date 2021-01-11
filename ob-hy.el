@@ -180,9 +180,9 @@ last statement in BODY, as elisp."
              (if pp
                  (list
                   "(import pprint)"
-                  (format "(with [f (open \"%s\" \"w\")] (.write f (.pformat pprint _)))"
+                  (format "(with [f (open \"%s\" \"w\")] (.write f (.pformat pprint *1)))"
                           (org-babel-process-file-name tmp-file 'noquote)))
-               (list (format "(with [f (open \"%s\" \"w\")] (.write f (str _)))"
+               (list (format "(with [f (open \"%s\" \"w\")] (.write f (str *1)))"
                              (org-babel-process-file-name tmp-file 'noquote)))))))
          (input-body (lambda (body)
                        (mapc

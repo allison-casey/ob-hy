@@ -97,8 +97,10 @@
          (body (if (null vars) (org-trim body)
                  (concat
                   (mapconcat
-                   (lambda (var)
-                     (format "(setv %S (quote %S))" (car var) (cdr var)))
+                   (lambda (pair)
+                     (format "(setv %s %s)"
+                             (car pair)
+                             (org-babel-hy-var-to-hy (cdr pair))))
                    vars "\n")
                   "\n" body))))
     body))
@@ -264,7 +266,7 @@ VARS contains resolved variable references"
 Convert an elisp value into a string of hy source code
 specifying a variable of the same value."
   (if (listp var)
-      (concat "[" (mapconcat #'org-babel-hy-var-to-hy var ", ") "]")
+      (concat "[" (mapconcat #'org-babel-hy-var-to-hy var " ") "]")
     (if (eq var 'hline)
         org-babel-hy-hline-to
       (format "%S" var))))
